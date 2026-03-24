@@ -529,12 +529,13 @@ function calcRassrochka(price,advPct,term){
   const advance=price*advPct, debt=price-advance;
   const foundDisc=findDiscount(price,advance,debt,term,advPct);
   if(foundDisc<0){alert('Не удалось найти дисконт. Проверьте входные данные.');return}
-
+  
+  const insurance = price * 0.0008 * (term / 12);
   const discAmt=price*foundDisc;
   const monthPay=debt/term;
-  const totalPay=advance+monthPay*term; // без рег. сбора для клиента
+  const totalPay = advance + monthPay * term + discAmt + insurance + REG_FEE;
   const schedule=buildScheduleRassrochka(debt,term);
-
+  
   // Сброс поля комиссии (вводится вручную)
   document.getElementById('commInput').value='';
   document.getElementById('commAmtDisplay').textContent='';
@@ -694,7 +695,7 @@ if(r.mode === 'rassrochka'){
   commPct = r.commPct || 0;
 }
   const insurance = r.mode==='leasing' ? (r.insurance || 0) : (r.price * 0.0008 * (r.term / 12));
-  const signing=r.advance+commAmt+insurance;
+  const signing = r.mode === 'rassrochka' ? (r.advance + commAmt + insurance + REG_FEE) : (r.advance + commAmt + insurance);
   const contractTotal=signing+(r.tot?r.tot.pay:(r.schedule._t.pay));
 
   // Top table
