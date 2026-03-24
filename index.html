@@ -290,7 +290,7 @@ body.cm .csh{display:flex}
           <span class="comm-amt" id="commAmtDisplay"></span>
         </div>
         <div id="feeDisplay" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid #a7f3d0">
-          <div class="cl" style="color:#6b21a8">Комиссия за оформление (клиент)</div>
+          <div class="cl" style="color:#6b21a8">Единовременный процентный платеж</div>
           <div style="font-size:18px;font-weight:800;color:#7c3aed" id="feePctDisplay"></div>
           <div style="font-size:11px;color:#7c3aed;margin-top:2px" id="feeAmtDisplay"></div>
         </div>
@@ -620,7 +620,7 @@ function renderResults(r){
         <div class="cv">${fmt(r.debt)}</div>
       </div>
       <div class="fee-row">
-  <div class="cl">Комиссия за оформление (клиент)</div>
+  <div class="cl">Единовременный процентный платеж</div>
   <div class="cv">3.50%</div>
   <div class="cs">${fmt(r.commAmt)}</div>
 </div>
@@ -683,8 +683,16 @@ function updateComm(){
 
 /* ══ Print doc ══ */
 function buildPrintDoc(r){
-  const commAmt=r.commAmt||0;
-  const commPct=r.commPct||0;
+  let commAmt = 0;
+let commPct = 0;
+
+if(r.mode === 'rassrochka'){
+  commAmt = r.discAmt;
+  commPct = r.foundDisc;
+}else{
+  commAmt = r.commAmt || 0;
+  commPct = r.commPct || 0;
+}
   const insurance = r.mode==='leasing' ? (r.insurance || 0) : (r.price * 0.0008 * (r.term / 12));
   const signing=r.advance+commAmt+insurance;
   const contractTotal=signing+(r.tot?r.tot.pay:(r.schedule._t.pay));
@@ -702,7 +710,7 @@ function buildPrintDoc(r){
     <tr class="pc-alt"><td class="pc-lbl">Срок</td><td class="pc-mid">Мес.</td><td class="pc-val">${r.term}</td></tr>
     ${r.mode==='leasing'?`<tr><td class="pc-lbl">Ставка лизинга</td><td class="pc-mid"></td><td class="pc-val">${fmtPct(r.flatRate)}</td></tr>`:''}
     <tr class="${r.mode==='leasing'?'pc-alt':''}"><td class="pc-lbl">Авансовый платёж</td><td class="pc-mid">${(r.advPct*100).toFixed(0)}%</td><td class="pc-val">${fmt(r.advance)}</td></tr>
-    <tr class="${r.mode==='leasing'?'':'pc-alt'}"><td class="pc-lbl">Комиссия за оформление</td><td class="pc-mid">${fmtPct(commPct)}</td><td class="pc-val">${fmt(commAmt)}</td></tr>
+    <tr class="${r.mode==='leasing'?'':'pc-alt'}"><td class="pc-lbl">Единовременный процентный платеж</td><td class="pc-mid">${commPct>0 ? fmtPct(commPct) : '-'}</td><td class="pc-val">${commAmt>0 ? fmt(commAmt) : '-'}</td></tr>
     <tr class="${r.mode==='leasing'?'pc-alt':''}"><td class="pc-lbl">Страхование на весь срок</td><td class="pc-mid">0,16%</td><td class="pc-val">${fmt(insurance)}</td></tr>`;
 
   document.getElementById('pdSign').innerHTML=`
