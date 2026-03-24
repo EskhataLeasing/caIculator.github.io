@@ -481,7 +481,7 @@ function buildScheduleRassrochka(debt,term){
 ══════════════════════════════ */
 const LEASING_RATE = 0.2975;        // годовая
 const LEASING_COMM = 0.035;         // 3,5% фиксированная комиссия
-const INSURANCE_PCT = 0.0016;       // страхование
+const INSURANCE_RATE = 0.0008;       // страхование
 
 function buildScheduleLeasing(debt,term){
   const rate=LEASING_RATE/12;
@@ -548,10 +548,11 @@ function calcRassrochka(price,advPct,term){
 
 function calcLeasing(price,advPct,term){
   // Аванс может быть 0 для лизинга
-  const advance=price*advPct;
-  const debt=price-advance;
-  const commAmt=price*LEASING_COMM;     // 3,5% от стоимости объекта
-  const insurance=price*INSURANCE_PCT;
+  const base = price + REG_FEE;
+  const advance = base * advPct;
+  const debt = base - advance;
+  const commAmt=base*LEASING_COMM;     // 3,5% от стоимости объекта
+  const insurance = price * INSURANCE_RATE * (term / 12);
   const schedule=buildScheduleLeasing(debt,term);
   const tot=schedule._t||{pay:0,princ:0,intr:0};
   // Flat rate
@@ -684,7 +685,7 @@ function updateComm(){
 function buildPrintDoc(r){
   const commAmt=r.commAmt||0;
   const commPct=r.commPct||0;
-  const insurance=r.mode==='leasing'?(r.insurance||0):(r.price*INSURANCE_PCT);
+  const insurance = r.mode==='leasing' ? (r.insurance || 0) : (r.price * 0.0008 * (r.term / 12));
   const signing=r.advance+commAmt+insurance;
   const contractTotal=signing+(r.tot?r.tot.pay:(r.schedule._t.pay));
 
@@ -701,7 +702,7 @@ function buildPrintDoc(r){
     <tr class="pc-alt"><td class="pc-lbl">Срок</td><td class="pc-mid">Мес.</td><td class="pc-val">${r.term}</td></tr>
     ${r.mode==='leasing'?`<tr><td class="pc-lbl">Ставка лизинга</td><td class="pc-mid"></td><td class="pc-val">${fmtPct(r.flatRate)}</td></tr>`:''}
     <tr class="${r.mode==='leasing'?'pc-alt':''}"><td class="pc-lbl">Авансовый платёж</td><td class="pc-mid">${(r.advPct*100).toFixed(0)}%</td><td class="pc-val">${fmt(r.advance)}</td></tr>
-    <tr class="${r.mode==='leasing'?'':'pc-alt'}"><td class="pc-lbl">Комиссия за оформление</td><td class="pc-mid">${commPct>0?fmtPct(commPct):'0%'}</td><td class="pc-val">${commPct>0?fmt(commAmt):'-'}</td></tr>
+    <tr class="${r.mode==='leasing'?'':'pc-alt'}"><td class="pc-lbl">Комиссия за оформление</td><td class="pc-mid">${fmtPct(commPct)}</td><td class="pc-val">${fmt(commAmt)}</td></tr>
     <tr class="${r.mode==='leasing'?'pc-alt':''}"><td class="pc-lbl">Страхование на весь срок</td><td class="pc-mid">0,16%</td><td class="pc-val">${fmt(insurance)}</td></tr>`;
 
   document.getElementById('pdSign').innerHTML=`
