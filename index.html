@@ -373,26 +373,30 @@ let mode='rassrochka'; // 'rassrochka' | 'leasing'
 
 function switchType(m){
   mode=m;
+
   document.getElementById('btnRass').classList.toggle('active', m==='rassrochka');
   document.getElementById('btnLeas').classList.toggle('active', m==='leasing');
-  // Reset results
+
   R=null;
+
   document.getElementById('resultCards').innerHTML=`<div class="empty-r card">
     <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-      <rect x="2" y="3" width="20" height="18" rx="3"/><path d="M7 8h10M7 12h6M7 16h4"/></svg>
-    <p>Введите параметры и нажмите «Рассчитать»</p></div>`;
-  if(r.mode==='leasing'){
-  document.getElementById('commBlock').style.display='block';
-}else{
-  document.getElementById('commBlock').style.display='block';
-}
+      <rect x="2" y="3" width="20" height="18" rx="3"/>
+      <path d="M7 8h10M7 12h6M7 16h4"/>
+    </svg>
+    <p data-i18n="empty_hint">Введите параметры и нажмите «Рассчитать»</p>
+  </div>`;
+
+  document.getElementById('commBlock').style.display='none';
   document.getElementById('schedSec').style.display='none';
   document.getElementById('actBtns').classList.remove('vis');
+
   document.getElementById('commInput').value='';
   document.getElementById('commAmtDisplay').textContent='';
   document.getElementById('feeDisplay').style.display='none';
-}
 
+  setLang(lang);
+}
 /* ══ Numbers ══ */
 function formatInput(el){const r=el.value.replace(/[^\d]/g,'');el.value=r?Number(r).toLocaleString('ru-RU'):''}
 function parseVal(s){if(!s)return 0;return parseFloat(String(s).replace(/[^\d.]/g,''))||0}
@@ -592,7 +596,7 @@ function renderResults(r){
   <div class="cv">${fmtPct(r.foundDisc)}</div>
   <div class="cs">${fmt(r.discAmt)}</div>
 </div>
-';
+`;
 
     // Schedule: рассрочка — 3 колонки (№, платёж, остаток)
     document.getElementById('schedHead').innerHTML=`<tr>
@@ -653,7 +657,6 @@ function renderResults(r){
       <div class="rg">${cardsHTML}</div>
     </div>`;
 
-  document.getElementById('commBlock').style.display='none';
   document.getElementById('schedSec').style.display='block';
   document.getElementById('actBtns').classList.add('vis');
   document.getElementById('screenSubtitle').textContent='График лизинговых платежей';
