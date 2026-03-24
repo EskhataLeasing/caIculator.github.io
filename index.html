@@ -712,6 +712,7 @@ if(r.mode === 'rassrochka'){
     ${r.mode==='leasing'?`<tr><td class="pc-lbl">Ставка лизинга</td><td class="pc-mid"></td><td class="pc-val">${fmtPct(r.flatRate)}</td></tr>`:''}
     <tr class="${r.mode==='leasing'?'pc-alt':''}"><td class="pc-lbl">Авансовый платёж</td><td class="pc-mid">${(r.advPct*100).toFixed(0)}%</td><td class="pc-val">${fmt(r.advance)}</td></tr>
     <tr class="${r.mode==='leasing'?'':'pc-alt'}"><td class="pc-lbl">Единовременный процентный платеж</td><td class="pc-mid">${commPct>0 ? fmtPct(commPct) : '-'}</td><td class="pc-val">${commAmt>0 ? fmt(commAmt) : '-'}</td></tr>
+    <tr><td class="pc-lbl">Стоимость регистрации</td><td class="pc-mid"></td><td class="pc-val">${fmt(REG_FEE)}</td></tr>
     <tr class="${r.mode==='leasing'?'pc-alt':''}"><td class="pc-lbl">Страхование на весь срок</td><td class="pc-mid">0,16%</td><td class="pc-val">${fmt(insurance)}</td></tr>`;
 
   document.getElementById('pdSign').innerHTML=`
