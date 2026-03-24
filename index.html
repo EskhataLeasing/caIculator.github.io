@@ -7,7 +7,6 @@
 <title>Eskhata Leasing — Калькулятор</title>
 <link rel="icon" type="image/png" href="favicon.png">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
 <style>
 :root{
   --blue:#1a4fa0;--blue-l:#2563c7;--accent:#6c63ff;
@@ -18,523 +17,496 @@
 body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 
 header{
-  background:var(--card);
-  border-bottom:1px solid var(--border);
-  padding:0 40px;
-  height:60px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  position:sticky;
-  top:0;
-  z-index:100;
+  background:var(--card);border-bottom:1px solid var(--border);
+  padding:0 40px;height:60px;display:flex;align-items:center;
+  justify-content:space-between;position:sticky;top:0;z-index:100;
   box-shadow:0 1px 8px rgba(26,79,160,.06);
 }
+.logo{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:800;color:var(--text);text-decoration:none}
+.logo-img{height:36px;width:auto;object-fit:contain;flex-shrink:0}
+.logo-icon{width:36px;height:36px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:800;flex-shrink:0}
+.lang-sw{display:flex;gap:14px}
+.lang-sw a{font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;cursor:pointer;transition:color .2s}
+.lang-sw a:hover,.lang-sw a.active{color:var(--blue)}
 
-.logo{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-size:20px;
-  font-weight:800;
-  color:var(--text);
-  text-decoration:none;
-}
+main{max-width:1120px;margin:0 auto;padding:36px 24px 60px}
+.grid{display:grid;grid-template-columns:380px 1fr;gap:24px;align-items:start}
+.card{background:var(--card);border-radius:16px;padding:28px;box-shadow:var(--shadow)}
 
-.logo-img{
-  height:36px;
-  width:auto;
-  object-fit:contain;
-}
-
-.logo-icon{
-  width:36px;
-  height:36px;
-  background:var(--blue);
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#fff;
-  font-size:18px;
-  font-weight:800;
-}
-
-.lang-sw{
-  display:flex;
-  gap:14px;
-}
-
-.lang-sw a{
-  font-size:13px;
-  font-weight:600;
-  color:var(--muted);
-  cursor:pointer;
-  transition:.2s;
-}
-
-.lang-sw a.active,
-.lang-sw a:hover{
-  color:var(--blue);
-}
-
-main{
-  max-width:1120px;
-  margin:0 auto;
-  padding:36px 24px 60px;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:380px 1fr;
-  gap:24px;
-}
-
-.card{
-  background:var(--card);
-  border-radius:16px;
-  padding:28px;
-  box-shadow:var(--shadow);
-}
-  /* ── TYPE SWITCHER ── */
-.type-sw{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin-bottom:20px;
-}
-
+/* ── TYPE SWITCHER ── */
+.type-sw{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}
 .type-btn{
-  padding:11px 8px;
-  border:2px solid var(--border);
-  border-radius:10px;
-  background:#f8fafd;
-  font-size:13px;
-  font-weight:700;
-  color:var(--muted);
-  cursor:pointer;
-  transition:.2s;
+  padding:11px 8px;border:2px solid var(--border);border-radius:10px;
+  background:#f8fafd;font-family:'Manrope',sans-serif;font-size:13px;
+  font-weight:700;color:var(--muted);cursor:pointer;transition:all .2s;text-align:center;
 }
-
 .type-btn.active{
-  border-color:var(--blue);
-  background:#eef4ff;
-  color:var(--blue);
+  border-color:var(--blue);background:#eef4ff;color:var(--blue);
 }
 
 /* ── FORM ── */
 .fg{margin-bottom:16px}
-
-label{
-  font-size:11px;
-  font-weight:700;
-  color:var(--muted);
-  margin-bottom:5px;
-  display:block;
+label{display:block;font-size:11px;font-weight:700;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
+input[type=text],input[type=number]{
+  width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;
+  font-size:15px;font-family:'Manrope',sans-serif;font-weight:500;color:var(--text);
+  background:#f8fafd;transition:border-color .2s,box-shadow .2s;outline:none;
 }
-
-input{
-  width:100%;
-  padding:10px 14px;
-  border:1.5px solid var(--border);
-  border-radius:10px;
-  font-size:15px;
-  background:#f8fafd;
-}
-
+input:focus{border-color:var(--blue-l);box-shadow:0 0 0 3px rgba(37,99,199,.1);background:#fff}
 .iw{position:relative}
-.isuf{
-  position:absolute;
-  right:12px;
-  top:50%;
-  transform:translateY(-50%);
-  font-size:13px;
-  color:var(--muted);
-}
+.iw input{padding-right:52px}
+.isuf{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--muted);font-weight:600;pointer-events:none}
 
-.btn{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:10px;
-  font-weight:700;
-  cursor:pointer;
-  margin-top:8px;
-}
+.btn{width:100%;padding:12px;border:none;border-radius:10px;font-family:'Manrope',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:5px}
+.btn-p{background:linear-gradient(135deg,var(--blue),var(--accent));color:#fff}
+.btn-p:hover{box-shadow:0 4px 16px rgba(108,99,255,.35);transform:translateY(-1px)}
+.btn-s{background:var(--text);color:#fff}
+.btn-s:hover{background:#1e2a38;transform:translateY(-1px)}
 
-.btn-p{
-  background:linear-gradient(135deg,var(--blue),var(--accent));
-  color:#fff;
-}
-
-.btn-s{
-  background:#111;
-  color:#fff;
-}
-  /* ── RESULT CARDS ── */
-.rg{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:11px;
-}
-
-.rc{
-  background:#f4f7fb;
-  border-radius:12px;
-  padding:13px 15px;
-  border:1px solid var(--border);
-}
-
+/* ── RESULT CARDS ── */
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.rc{background:#f4f7fb;border-radius:12px;padding:13px 15px;border:1px solid var(--border)}
 .rc.full{grid-column:1/-1}
+.rc.hi{background:#eef4ff;border-color:#c7d8f7}
+.cl{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.cv{font-size:18px;font-weight:800;color:var(--text);letter-spacing:-.4px}
+.cs{font-size:11px;color:var(--muted);margin-top:2px;font-weight:500}
 
-.cl{
-  font-size:10px;
-  color:var(--muted);
-  font-weight:700;
-  margin-bottom:4px;
-}
-
-.cv{
-  font-size:18px;
-  font-weight:800;
-}
-
-.cs{
-  font-size:11px;
-  color:var(--muted);
-}
-
-/* internal row */
-.int-row{
-  grid-column:1/-1;
-  background:#fff7ed;
-  border:1px solid #fcd9a0;
-  border-radius:12px;
-  padding:13px 15px;
-}
+/* internal row (рассрочка — дисконт) */
+.int-row{grid-column:1/-1;background:#fff7ed;border:1px solid #fcd9a0;border-radius:12px;padding:13px 15px;display:flex;align-items:center;justify-content:space-between}
+.int-row .cl{color:#92400e}
+.int-row .cv{font-size:18px;font-weight:800;color:#b45309}
+.int-badge{font-size:10px;background:#fef3c7;color:#92400e;border-radius:6px;padding:3px 8px;font-weight:700;border:1px solid #fcd9a0;white-space:nowrap}
 
 /* commission row */
-.comm-row{
-  grid-column:1/-1;
-  background:#f0fdf4;
-  border:1px solid #a7f3d0;
-  border-radius:12px;
-  padding:13px 15px;
-}
+.comm-row{grid-column:1/-1;background:#f0fdf4;border:1px solid #a7f3d0;border-radius:12px;padding:13px 15px}
+.comm-row .cl{color:#065f46;margin-bottom:8px}
+.comm-inp-row{display:flex;align-items:center;gap:10px}
+.comm-inp-row input{width:120px;padding:8px 32px 8px 12px;border:1.5px solid #6ee7b7;border-radius:8px;font-size:14px;font-family:'Manrope',sans-serif;font-weight:600;color:#065f46;background:#fff;outline:none}
+.comm-amt{font-size:13px;color:#065f46;font-weight:600}
 
-.comm-inp-row{
-  display:flex;
-  gap:10px;
-  align-items:center;
-}
+/* client fee row */
+.fee-row{grid-column:1/-1;background:#fdf4ff;border:1px solid #e9d5ff;border-radius:12px;padding:13px 15px}
+.fee-row .cl{color:#6b21a8;margin-bottom:4px}
+.fee-row .cv{font-size:18px;font-weight:800;color:#7c3aed}
 
-.comm-amt{
-  font-size:13px;
-  font-weight:600;
-}
-
-/* fee row */
-.fee-row{
-  grid-column:1/-1;
-  background:#fdf4ff;
-  border:1px solid #e9d5ff;
-  border-radius:12px;
-  padding:13px 15px;
-}
-
-/* schedule */
+/* ── SCHEDULE ── */
 .sched-sec{margin-top:22px}
+.sec-title{font-size:15px;font-weight:700;margin-bottom:11px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead tr{background:var(--blue);color:#fff}
+thead th{padding:9px 11px;text-align:left;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.4px}
+tbody tr:nth-child(even){background:#f8fafd}
+tbody tr:hover{background:#eef4ff}
+tbody td{padding:6px 11px;border-bottom:1px solid #f0f3f8;font-weight:500}
+tbody td:not(:first-child){text-align:right}
+tfoot tr{background:#e8eef8;font-weight:700}
+tfoot td{padding:8px 11px;border-top:2px solid var(--blue)}
+tfoot td:not(:first-child){text-align:right}
 
-table{
-  width:100%;
-  border-collapse:collapse;
-}
+.empty-r{text-align:center;padding:44px 20px;color:var(--muted)}
+.empty-r svg{opacity:.3;margin:0 auto 12px;display:block}
+.empty-r p{font-size:14px;font-weight:500}
 
-thead{
-  background:var(--blue);
-  color:#fff;
-}
+.act-btns{display:none;margin-top:14px;gap:10px}
+.act-btns.vis{display:flex}
+.btn-print{padding:10px 20px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-family:'Manrope',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:.2s}
+.btn-print:hover{background:var(--blue-l)}
+.btn-exit{display:none;padding:10px 20px;background:#e2e8f0;color:var(--text);border:none;border-radius:8px;font-family:'Manrope',sans-serif;font-size:14px;font-weight:700;cursor:pointer}
 
-thead th{
-  padding:8px;
-  font-size:11px;
-}
-
-tbody td{
-  padding:6px;
-  border-bottom:1px solid #eee;
-}
-  /* ── CLIENT MODE ── */
+/* ── CLIENT MODE ── */
 body.cm header{display:none}
+body.cm main{padding:16px}
 body.cm .form-card{display:none}
 body.cm .grid{grid-template-columns:1fr}
+body.cm .btn-exit{display:inline-block}
 body.cm .int-row{display:none!important}
 body.cm .comm-row{display:none!important}
 
-/* mobile */
+.csh{display:none;align-items:center;gap:14px;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid var(--blue)}
+body.cm .csh{display:flex}
+.pt{font-size:18px;font-weight:800}
+.ps{font-size:12px;color:var(--muted);margin-top:2px}
+
+#printDoc{position:absolute;left:-9999px;top:0;width:210mm;visibility:hidden;pointer-events:none}
+
+/* ── MOBILE ── */
 @media(max-width:640px){
-  .grid{grid-template-columns:1fr}
-  main{padding:16px}
+  header{padding:0 16px;height:54px}
+  .logo-icon{width:30px;height:30px;font-size:15px}
+  .lang-sw{gap:10px}
+  main{padding:16px 12px 40px}
+  .grid{grid-template-columns:1fr!important;gap:16px}
+  .card{padding:16px 13px;border-radius:12px}
+  .fg{margin-bottom:12px}
+  input[type=text],input[type=number]{font-size:16px;padding:9px 12px}
+  .btn{padding:11px;font-size:14px}
+  .rg{grid-template-columns:1fr 1fr;gap:8px}
+  .cv{font-size:15px}
+  .sched-sec .card{overflow-x:auto}
+  table{font-size:11px;min-width:280px}
+  thead th{padding:7px 8px;font-size:9px}
+  tbody td{padding:5px 8px}
+  .act-btns{flex-direction:column}
+  .btn-print,.btn-exit{width:100%;text-align:center}
+  .int-row{flex-direction:column;align-items:flex-start;gap:6px}
+  .int-badge{align-self:flex-end}
+}
+@media(min-width:641px) and (max-width:860px){
+  .grid{grid-template-columns:1fr!important}
+  main{padding:24px 16px 50px}
 }
 
-/* print */
+/* ── PRINT ── */
 @media print{
-  body>header,body>main{display:none}
-  #printDoc{display:block}
+  @page{size:A4 portrait;margin:8mm 10mm}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  body>header,body>main,.act-btns{display:none!important}
+  body{background:#fff;margin:0;padding:0}
+  #printDoc{display:block!important;position:static!important;left:auto!important;top:auto!important;visibility:visible!important;width:100%;font-family:Arial,Helvetica,sans-serif;font-size:8pt;color:#000}
+  .pd-logo-box{display:table;border:1pt solid #1a4fa0;border-radius:4pt;padding:4pt 10pt;margin-bottom:6pt}
+  .pd-logo-inner{display:table-cell;vertical-align:middle}
+  .pd-top{width:100%;border-collapse:collapse;margin-bottom:4pt;font-size:8pt}
+  .pd-top td{padding:3pt 6pt;border:.5pt solid #b0bac8}
+  .pt-lbl{color:#222;width:62%}
+  .pt-val{font-weight:700;text-align:right;font-size:8.5pt}
+  .pd-cond{width:100%;border-collapse:collapse;margin-bottom:4pt;font-size:8pt}
+  .pd-cond-head td{background:#d0daea!important;font-weight:700;text-align:center;padding:3pt 6pt;border:.5pt solid #b0bac8;font-size:8pt}
+  .pd-cond td{padding:3pt 6pt;border:.5pt solid #b0bac8;vertical-align:middle}
+  .pc-lbl{color:#222;width:52%}
+  .pc-mid{color:#555;font-size:7.5pt;text-align:center;width:10%}
+  .pc-val{font-weight:700;text-align:right}
+  .pd-cond .pc-alt td{background:#f0f3f9!important}
+  .pd-sign{width:100%;border-collapse:collapse;margin-bottom:4pt;font-size:8pt}
+  .pd-sign td{padding:3pt 6pt;border:.5pt solid #b0bac8}
+  .ps-lbl{color:#222;font-weight:600;width:62%}
+  .ps-val{font-weight:700;text-align:right;font-size:8.5pt}
+  .pd-debt{width:100%;border-collapse:collapse;margin-bottom:6pt;font-size:8pt}
+  .pd-debt td{padding:3pt 6pt;border:.5pt solid #b0bac8}
+  .pdl{color:#222;width:62%}
+  .pdv{font-weight:700;text-align:right}
+  .pd-sched-wrap{border:.5pt solid #b0bac8}
+  .pd-sched-hd{font-size:8pt;font-weight:700;text-align:center;padding:3pt;background:#eef2f8;border-bottom:.5pt solid #b0bac8}
+  .pd-sched{width:100%;border-collapse:collapse;font-size:7.5pt}
+  .pd-sched thead tr{background:#fff}
+  .pd-sched thead th{color:#333;padding:3pt 5pt;text-align:center;font-weight:600;font-size:7.5pt;border-bottom:.5pt solid #b0bac8;border-right:.5pt solid #d0d8e8}
+  .pd-sched .sched-sub td{font-weight:700;text-align:right;padding:2pt 5pt;font-size:7.5pt;border-bottom:.5pt solid #b0bac8;border-right:.5pt solid #d0d8e8;background:#f8f9fc}
+  .pd-sched .sched-sub td:first-child{text-align:center}
+  .pd-sched tbody td{padding:1.8pt 5pt;border-bottom:.3pt solid #e8ecf2;border-right:.3pt solid #e8ecf2;text-align:right}
+  .pd-sched tbody td:first-child{text-align:center;color:#333}
+  .pd-sched tbody tr:last-child td{border-bottom:none}
 }
 </style>
 </head>
-
 <body>
 
 <header>
-  <div class="logo">
-    <img src="logo.png" class="logo-img">
-  </div>
+  <a class="logo" href="#">
+    <img class="logo-img" src="logo.png" alt="Eskhata Leasing"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <div class="logo-icon" style="display:none">Э</div>
+  </a>
   <div class="lang-sw">
-    <a class="active">RU</a>
-    <a>UZ</a>
-    <a>ENG</a>
+    <a class="active" onclick="setLang('ru')">RU</a>
+    <a onclick="setLang('uz')">UZ</a>
+    <a onclick="setLang('en')">ENG</a>
   </div>
 </header>
 
 <main>
-<div class="grid">
+  <div class="grid">
 
-<!-- FORM -->
-<div class="card form-card">
+    <!-- ФОРМА -->
+    <div class="card form-card">
 
-<div class="type-sw">
-  <button class="type-btn active" onclick="switchType('rassrochka')">Рассрочка</button>
-  <button class="type-btn" onclick="switchType('leasing')">Лизинг</button>
-</div>
+      <!-- Переключатель типа -->
+      <div class="type-sw">
+        <button class="type-btn active" id="btnRass" onclick="switchType('rassrochka')">
+          Рассрочка
+        </button>
+        <button class="type-btn" id="btnLeas" onclick="switchType('leasing')">
+          Лизинг (аннуитет)
+        </button>
+      </div>
 
-<div class="fg">
-  <label>Стоимость объекта</label>
-  <input id="price" type="text">
-</div>
+      <div class="fg">
+        <label data-i18n="obj_price">Стоимость объекта</label>
+        <input type="text" id="price" oninput="formatInput(this)" placeholder="0">
+      </div>
 
-<div class="fg">
-  <label>Аванс</label>
-  <div class="iw">
-    <input id="advPct" type="number">
-    <span class="isuf">%</span>
+      <div class="fg">
+        <label data-i18n="advance_pct">Аванс (%)</label>
+        <div class="iw">
+          <input type="number" id="advPct" min="0" max="99" step="1" placeholder="30">
+          <span class="isuf">%</span>
+        </div>
+      </div>
+
+      <div class="fg">
+        <label data-i18n="term_months">Срок (мес.)</label>
+        <input type="number" id="term" min="1" max="120" step="1" placeholder="24">
+      </div>
+
+      <button class="btn btn-p" onclick="calculate()" data-i18n="calc_btn">Рассчитать</button>
+      <button class="btn btn-s" style="margin-top:8px" onclick="enterCM()" data-i18n="client_btn">Режим для клиента</button>
+    </div>
+
+    <!-- РЕЗУЛЬТАТЫ -->
+    <div id="resultsPanel">
+
+      <div class="csh">
+        <img class="logo-img" src="logo.png" alt="Eskhata Leasing" style="height:40px"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="logo-icon" style="display:none;width:40px;height:40px;font-size:20px">Э</div>
+        <div>
+          <div class="pt">Eskhata Leasing</div>
+          <div class="ps" id="screenSubtitle">График лизинговых платежей</div>
+        </div>
+      </div>
+
+      <div id="resultCards">
+        <div class="empty-r card">
+          <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="2" y="3" width="20" height="18" rx="3"/><path d="M7 8h10M7 12h6M7 16h4"/>
+          </svg>
+          <p data-i18n="empty_hint">Введите параметры и нажмите «Рассчитать»</p>
+        </div>
+      </div>
+
+      <!--
+        Единоразовый % — статичный блок (не перерисовывается при расчёте)
+        Рассрочка: вводится вручную
+        Лизинг:    фиксировано 3,5%, поле заблокировано
+      -->
+      <div id="commBlock" class="comm-row" style="display:none;margin-bottom:12px">
+        <div class="cl" id="commLabel">Единоразовый % для клиента</div>
+        <div class="comm-inp-row">
+          <div class="iw" style="width:130px">
+            <input type="number" id="commInput" min="0" max="100" step="0.01"
+              placeholder="Введите %"
+              oninput="updateComm()">
+            <span class="isuf">%</span>
+          </div>
+          <span class="comm-amt" id="commAmtDisplay"></span>
+        </div>
+        <div id="feeDisplay" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid #a7f3d0">
+          <div class="cl" style="color:#6b21a8">Комиссия за оформление (клиент)</div>
+          <div style="font-size:18px;font-weight:800;color:#7c3aed" id="feePctDisplay"></div>
+          <div style="font-size:11px;color:#7c3aed;margin-top:2px" id="feeAmtDisplay"></div>
+        </div>
+      </div>
+
+      <div id="schedSec" class="sched-sec" style="display:none">
+        <div class="sec-title">График платежей</div>
+        <div class="card" style="padding:0;overflow:hidden">
+          <table>
+            <thead id="schedHead"></thead>
+            <tbody id="schedBody"></tbody>
+            <tfoot id="schedFoot"></tfoot>
+          </table>
+        </div>
+      </div>
+
+      <div class="act-btns" id="actBtns">
+        <button class="btn-print" onclick="doPrint()">🖨 Распечатать</button>
+        <button class="btn-exit" onclick="exitCM()">← Назад</button>
+      </div>
+    </div>
   </div>
-</div>
+</main>
 
-<div class="fg">
-  <label>Срок</label>
-  <input id="term" type="number">
-</div>
-
-<button class="btn btn-p" onclick="calculate()">Рассчитать</button>
-<button class="btn btn-s" onclick="enterCM()">Для клиента</button>
-
-</div>
-
-<!-- RESULTS -->
-<div id="resultsPanel">
-<div id="resultCards"></div>
-
-<div id="schedSec" class="sched-sec" style="display:none">
-  <div class="card">
-    <table>
-      <thead id="schedHead"></thead>
-      <tbody id="schedBody"></tbody>
-      <tfoot id="schedFoot"></tfoot>
+<!-- ПЕЧАТНЫЙ ДОКУМЕНТ -->
+<div id="printDoc">
+  <table class="pd-logo-box" cellpadding="0" cellspacing="0">
+    <tr>
+      <td class="pd-logo-inner">
+        <img src="logo.png" style="height:30pt;width:auto" alt="Eskhata Leasing">
+      </td>
+    </tr>
+  </table>
+  <table class="pd-top"  id="pdTop"></table>
+  <table class="pd-cond" id="pdCond"></table>
+  <table class="pd-sign" id="pdSign"></table>
+  <table class="pd-debt" id="pdDebt"></table>
+  <div class="pd-sched-wrap">
+    <div class="pd-sched-hd">График платежей</div>
+    <table class="pd-sched">
+      <thead id="pdSchedHead"></thead>
+      <tbody id="pdSchedBody"></tbody>
+      <tfoot id="pdSchedFoot"></tfoot>
     </table>
   </div>
 </div>
 
-<div class="act-btns" id="actBtns">
-  <button onclick="doPrint()">Печать</button>
-</div>
-
-</div>
-</div>
-</main>
-
-<!-- PRINT -->
-<div id="printDoc" style="display:none">
-  <table id="pdTop"></table>
-  <table id="pdCond"></table>
-  <table id="pdSign"></table>
-  <table id="pdDebt"></table>
-
-  <table>
-    <thead id="pdSchedHead"></thead>
-    <tbody id="pdSchedBody"></tbody>
-    <tfoot id="pdSchedFoot"></tfoot>
-  </table>
-</div>
-
 <script>
+/* ══ i18n ══ */
+const L={
+  ru:{
+    obj_price:'Стоимость объекта',advance_pct:'Аванс (%)',term_months:'Срок (мес.)',
+    calc_btn:'Рассчитать',client_btn:'Режим для клиента',
+    empty_hint:'Введите параметры и нажмите «Рассчитать»',
+  },
+  uz:{
+    obj_price:"Ob'ekt narxi",advance_pct:'Avans (%)',term_months:'Muddat (oy)',
+    calc_btn:'Hisoblash',client_btn:'Mijoz rejimi',
+    empty_hint:'Parametrlarni kiriting va "Hisoblash" ni bosing',
+  },
+  en:{
+    obj_price:'Object price',advance_pct:'Advance (%)',term_months:'Term (months)',
+    calc_btn:'Calculate',client_btn:'Client mode',
+    empty_hint:'Enter parameters and click "Calculate"',
+  }
+};
+let lang='ru';
+function t(k){return L[lang][k]||k}
 
-/* STATE */
-let mode='rassrochka';
-let R=null;
+function setLang(l){
+  lang=l;
+  document.querySelectorAll('[data-i18n]').forEach(el=>el.textContent=t(el.getAttribute('data-i18n')));
+  document.querySelectorAll('.lang-sw a').forEach(a=>
+    a.classList.toggle('active',a.textContent===l.toUpperCase()||(l==='en'&&a.textContent==='ENG')));
+  if(R) renderResults(R);
+}
 
-/* SWITCH */
+/* ══ Mode ══ */
+let mode='rassrochka'; // 'rassrochka' | 'leasing'
+
 function switchType(m){
   mode=m;
+  document.getElementById('btnRass').classList.toggle('active', m==='rassrochka');
+  document.getElementById('btnLeas').classList.toggle('active', m==='leasing');
+  // Reset results
   R=null;
-  document.getElementById('resultCards').innerHTML='';
+  document.getElementById('resultCards').innerHTML=`<div class="empty-r card">
+    <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <rect x="2" y="3" width="20" height="18" rx="3"/><path d="M7 8h10M7 12h6M7 16h4"/></svg>
+    <p>Введите параметры и нажмите «Рассчитать»</p></div>`;
+  document.getElementById('commBlock').style.display='none';
+  document.getElementById('schedSec').style.display='none';
+  document.getElementById('actBtns').classList.remove('vis');
+  document.getElementById('commInput').value='';
+  document.getElementById('commAmtDisplay').textContent='';
+  document.getElementById('feeDisplay').style.display='none';
 }
 
-/* FORMAT */
-function parseVal(v){
-  return parseFloat(String(v).replace(/[^\d.]/g,''))||0;
-}
-
+/* ══ Numbers ══ */
+function formatInput(el){const r=el.value.replace(/[^\d]/g,'');el.value=r?Number(r).toLocaleString('ru-RU'):''}
+function parseVal(s){if(!s)return 0;return parseFloat(String(s).replace(/[^\d.]/g,''))||0}
 function fmt(n){
+  if(n===null||n===undefined)return'—';
   return Math.round(n).toLocaleString('ru-RU');
 }
-
-function fmtPct(n){
-  return (n*100).toFixed(2)+'%';
+function fmtPct(n,dec=2){
+  return(n*100).toLocaleString('ru-RU',{minimumFractionDigits:dec,maximumFractionDigits:dec})+'%';
 }
-  
-/* === РАССРОЧКА === */
-const TARGET_IRR=0.30;
-const IRR_STEP=0.0001;
-const DISC_STEP=0.0005;
-const DISC_MAX=0.5;
-const REG_FEE=1000000;
 
-function ceilTo(v,s){
-  return Math.ceil((v+s-1e-7)/s)*s;
-}
+/* ══════════════════════════════
+   РАССРОЧКА — математика (IRR)
+══════════════════════════════ */
+const TARGET_IRR=0.30, IRR_STEP=0.0001, DISC_STEP=0.0005, DISC_MAX=0.50;
+const REG_FEE=1000000; // фиксированная регистрация — внутри кода, не показывается
+
+function ceilTo(v,s){return Math.ceil((v+s-1e-7)/s)*s}
 
 function calcNominalIRR(cfs){
-  let lo=-0.9999,hi=100;
-
-  for(let i=0;i<300;i++){
-    let mid=(lo+hi)/2;
-    let npv=0;
-
-    for(let j=0;j<cfs.length;j++){
-      npv+=cfs[j]/Math.pow(1+mid,j);
-    }
-
-    if(Math.abs(npv)<0.01) return mid*12;
-    if(npv>0) lo=mid; else hi=mid;
+  let lo=-0.9999,hi=100,npvLo=0,npvHi=0;
+  for(let i=0;i<cfs.length;i++){
+    npvLo+=cfs[i]/Math.pow(1+lo,i);
+    npvHi+=cfs[i]/Math.pow(1+hi,i);
   }
-
-  return 0;
+  if(npvLo*npvHi>0)return -999;
+  let mid=0;
+  for(let it=0;it<300;it++){
+    mid=(lo+hi)/2;
+    let npv=0;
+    for(let i=0;i<cfs.length;i++)npv+=cfs[i]/Math.pow(1+mid,i);
+    if(Math.abs(npv)<0.01)break;
+    if(npv>0)lo=mid;else hi=mid;
+  }
+  return mid*12;
 }
 
-function buildCF(price,advance,debt,term,disc){
-  let da=price*disc;
-  let vat=da*12/112;
-  let cf0=advance-(price-da+vat+REG_FEE);
-
-  let cfs=[cf0];
-  for(let i=1;i<=term;i++){
-    cfs.push(debt/term);
-  }
+function buildCFs_rassrochka(price,advance,debt,term,disc){
+  const da=price*disc, vat=da*12/112;
+  const cf0=advance-(price-da+vat+REG_FEE);
+  const mp=debt/term;
+  const cfs=[cf0];
+  for(let i=1;i<=term;i++)cfs.push(mp);
   return cfs;
 }
 
-function findDiscount(price,advance,debt,term){
+// Таблица фиксированных дисконтов
+const FIXED_DISCOUNTS=[
+  {term:24, adv:0.50, disc:0.1425},
+  // {term:12, adv:0.30, disc:0.XXXX},
+];
+
+function findDiscount(price,advance,debt,term,advPct){
+  for(const r of FIXED_DISCOUNTS)
+    if(r.term===term&&Math.abs(advPct-r.adv)<0.0001)return r.disc;
   let d=DISC_STEP;
-
   while(d<=DISC_MAX){
-    let irr=calcNominalIRR(buildCF(price,advance,debt,term,d));
-
-    if(irr>0 && ceilTo(irr,IRR_STEP)>=TARGET_IRR){
-      return d;
-    }
-
-    d+=DISC_STEP;
+    const irr=calcNominalIRR(buildCFs_rassrochka(price,advance,debt,term,d));
+    if(irr>0&&ceilTo(irr,IRR_STEP)>=TARGET_IRR)return ceilTo(d,0.0001);
+    d=Math.round((d+DISC_STEP)*1e6)/1e6;
   }
-
   return -1;
 }
-  
-/* === ЛИЗИНГ === */
-const LEASING_RATE = 0.2975;
-const LEASING_COMM = 0.035;
-const INSURANCE_PCT = 0.0016;
 
 function buildScheduleRassrochka(debt,term){
-  let rows=[];
-  let mp=debt/term;
-  let bal=debt;
-
-  for(let i=1;i<=term;i++){
-    let pay=(i===term)?bal:mp;
-    bal=Math.max(0,bal-pay);
-
-    rows.push({
-      n:i,
-      pay:pay,
-      bal:bal
-    });
+  // Равные платежи, без процентов
+  const rows=[], mp=debt/term;
+  let bal=debt, totP=0, totT=0;
+  for(let j=1;j<=term;j++){
+    const pr=(j===term)?bal:mp;
+    bal=Math.max(0,bal-pr);
+    totP+=pr; totT+=pr;
+    rows.push({n:j,pay:pr,princ:pr,intr:0,bal,show:true});
   }
-
-  rows._t={
-    pay:debt
-  };
-
+  rows._t={pay:totT,princ:totP,intr:0};
   return rows;
 }
+
+/* ══════════════════════════════
+   ЛИЗИНГ — аннуитет 29,75%
+   Комиссия клиенту: 3,5% (фикс)
+══════════════════════════════ */
+const LEASING_RATE = 0.2975;        // годовая
+const LEASING_COMM = 0.035;         // 3,5% фиксированная комиссия
+const INSURANCE_PCT = 0.0016;       // страхование
 
 function buildScheduleLeasing(debt,term){
-  let rate=LEASING_RATE/12;
-  let rows=[];
-  let bal=debt;
-
-  let pay;
-  if(rate===0){
-    pay=debt/term;
-  } else {
-    let pv=(1+rate)**term;
-    pay=debt*(rate*pv)/(pv-1);
-  }
-
-  let totPay=0,totPr=0,totInt=0;
-
+  const rate=LEASING_RATE/12;
+  const rows=[];
+  if(term<=0||debt<=0)return rows;
+  let pay, bal=debt;
+  if(Math.abs(rate)<1e-12){pay=debt/term}
+  else{const pv=(1+rate)**term; pay=debt*(rate*pv)/(pv-1)}
+  let totP=0,totI=0,totT=0;
   for(let i=1;i<=term;i++){
-    let intr=bal*rate;
+    const intr=bal*rate;
     let princ=pay-intr;
-
-    if(i===term){
-      princ=bal;
-      pay=princ+intr;
-    }
-
+    if(i===term){princ=bal;pay=princ+intr}
+    if(princ<0)princ=0;
     bal=Math.max(0,bal-princ);
-
-    totPay+=pay;
-    totPr+=princ;
-    totInt+=intr;
-
-    rows.push({
-      n:i,
-      pay,
-      princ,
-      intr,
-      bal
-    });
+    totP+=princ;totI+=intr;totT+=pay;
+    rows.push({n:i,pay,princ,intr,bal,show:true});
   }
-
-  rows._t={
-    pay:totPay,
-    princ:totPr,
-    intr:totInt
-  };
-
+  rows._t={pay:totT,princ:totP,intr:totI};
   return rows;
 }
-  
-/* === CALCULATE === */
-function calculate(){
-  let price=parseVal(document.getElementById('price').value);
-  let advPct=parseVal(document.getElementById('advPct').value)/100;
-  let term=parseInt(document.getElementById('term').value)||0;
 
-  if(price<=0){alert('Введите стоимость');return;}
-  if(term<=0){alert('Введите срок');return;}
+/* ══ State ══ */
+let R=null;
+
+/* ══ Calculate ══ */
+function calculate(){
+  const price  =parseVal(document.getElementById('price').value);
+  const advPct =parseVal(document.getElementById('advPct').value)/100;
+  const term   =parseInt(document.getElementById('term').value)||0;
+
+  if(price<=0){alert('Введите стоимость объекта');return}
+  if(term<=0){alert('Введите срок');return}
 
   if(mode==='rassrochka'){
     calcRassrochka(price,advPct,term);
@@ -543,200 +515,132 @@ function calculate(){
   }
 }
 
-/* === РАССРОЧКА === */
 function calcRassrochka(price,advPct,term){
-  if(advPct<=0 || advPct>=1){
-    alert('Введите корректный аванс');
-    return;
-  }
+  if(advPct<=0||advPct>=1){alert('Введите корректный аванс (1–99%)');return}
 
-  let advance=price*advPct;
-  let debt=price-advance;
+  const advance=price*advPct, debt=price-advance;
+  const foundDisc=findDiscount(price,advance,debt,term,advPct);
+  if(foundDisc<0){alert('Не удалось найти дисконт. Проверьте входные данные.');return}
 
-  let disc=findDiscount(price,advance,debt,term);
-  if(disc<0){
-    alert('Ошибка расчета дисконта');
-    return;
-  }
+  const discAmt=price*foundDisc;
+  const monthPay=debt/term;
+  const totalPay=advance+monthPay*term; // без рег. сбора для клиента
+  const schedule=buildScheduleRassrochka(debt,term);
 
-  let discAmt=price*disc;
-  let monthPay=debt/term;
-  let totalPay=advance + monthPay*term;
+  // Сброс поля комиссии (вводится вручную)
+  document.getElementById('commInput').value='';
+  document.getElementById('commAmtDisplay').textContent='';
+  document.getElementById('feeDisplay').style.display='none';
+  document.getElementById('commInput').disabled=false;
+  document.getElementById('commInput').placeholder='Введите %';
 
-  let schedule=buildScheduleRassrochka(debt,term);
-
-  R={
-    mode:'rassrochka',
-    price,
-    advance,
-    advPct,
-    debt,
-    term,
-    foundDisc:disc,
-    discAmt,
-    totalPay,
-    schedule
-  };
-
+  R={mode:'rassrochka',price,advance,advPct,debt,term,foundDisc,discAmt,monthPay,totalPay,schedule,commPct:0,commAmt:0};
   renderResults(R);
 }
 
-/* === ЛИЗИНГ === */
 function calcLeasing(price,advPct,term){
-  let advance=price*advPct;
-  let debt=price-advance;
+  // Аванс может быть 0 для лизинга
+  const advance=price*advPct;
+  const debt=price-advance;
+  const commAmt=price*LEASING_COMM;     // 3,5% от стоимости объекта
+  const insurance=price*INSURANCE_PCT;
+  const schedule=buildScheduleLeasing(debt,term);
+  const tot=schedule._t||{pay:0,princ:0,intr:0};
+  // Flat rate
+  const flatRate=(tot.intr&&debt>0&&term>0)?tot.intr/(debt*term/12):0;
+  const totalPay=advance+tot.pay;
+  const signing=advance+commAmt+insurance;
 
-  let commAmt=price*LEASING_COMM;
-  let insurance=price*INSURANCE_PCT;
+  // Установить 3,5% в поле комиссии и заблокировать
+  const ci=document.getElementById('commInput');
+  ci.value='3.5';
+  ci.disabled=true;
+  document.getElementById('commAmtDisplay').textContent=fmt(commAmt);
+  document.getElementById('feeDisplay').style.display='block';
+  document.getElementById('feePctDisplay').textContent=fmtPct(LEASING_COMM);
+  document.getElementById('feeAmtDisplay').textContent=fmt(commAmt);
 
-  let schedule=buildScheduleLeasing(debt,term);
-  let tot=schedule._t;
-
-  let flatRate=(tot.intr)/(debt*term/12);
-  let totalPay=advance + tot.pay;
-
-  R={
-    mode:'leasing',
-    price,
-    advance,
-    advPct,
-    debt,
-    term,
-    commAmt,
-    insurance,
-    schedule,
-    tot,
-    totalPay,
-    flatRate
-  };
-
+  R={mode:'leasing',price,advance,advPct,debt,term,commAmt,commPct:LEASING_COMM,insurance,schedule,tot,totalPay,flatRate,signing};
   renderResults(R);
 }
-  /* === RENDER === */
+
+/* ══ Render screen ══ */
 function renderResults(r){
   let cardsHTML='';
 
   if(r.mode==='rassrochka'){
-
     cardsHTML=`
       <div class="rc">
         <div class="cl">Долг лизинга</div>
         <div class="cv">${fmt(r.debt)}</div>
       </div>
-
       <div class="rc">
         <div class="cl">Аванс</div>
         <div class="cv">${fmt(r.advance)}</div>
         <div class="cs">${(r.advPct*100).toFixed(0)}%</div>
       </div>
-
       <div class="rc full">
         <div class="cl">Общая сумма оплаты</div>
         <div class="cv">${fmt(r.totalPay)}</div>
       </div>
+     <div class="fee-row">
+  <div class="cl">Единоразовый % для клиента</div>
+  <div class="cv">${fmtPct(r.foundDisc)}</div>
+  <div class="cs">${fmt(r.discAmt)}</div>
+</div>
 
-      <!-- 🔥 ВМЕСТО ВНУТРЕННЕГО ДИСКОНТА -->
-      <div class="fee-row">
-        <div class="cl">Единоразовый % для клиента</div>
-        <div class="cv">${fmtPct(r.foundDisc)}</div>
-        <div class="cs">${fmt(r.discAmt)}</div>
-      </div>
-    `;
-
-    /* schedule */
-    document.getElementById('schedHead').innerHTML=`
-      <tr>
-        <th>№</th>
-        <th>Сумма платежа</th>
-        <th>Остаток долга</th>
-      </tr>`;
-
-    let tbody=document.getElementById('schedBody');
+    // Schedule: рассрочка — 3 колонки (№, платёж, остаток)
+    document.getElementById('schedHead').innerHTML=`<tr>
+      <th>№</th><th>Сумма платежа</th><th>Остаток долга</th></tr>`;
+    const tbody=document.getElementById('schedBody');
     tbody.innerHTML='';
-
     r.schedule.forEach(row=>{
-      let tr=document.createElement('tr');
-      tr.innerHTML=`
-        <td>${row.n}</td>
-        <td>${fmt(row.pay)}</td>
-        <td>${fmt(row.bal)}</td>
-      `;
+      const tr=document.createElement('tr');
+      tr.innerHTML=`<td>${row.n}</td><td>${fmt(row.pay)}</td><td>${fmt(row.bal)}</td>`;
       tbody.appendChild(tr);
     });
-
-    document.getElementById('schedFoot').innerHTML=`
-      <tr>
-        <td>Итого</td>
-        <td>${fmt(r.schedule._t.pay)}</td>
-        <td>—</td>
-      </tr>`;
+    document.getElementById('schedFoot').innerHTML=
+      `<tr><td>Итого</td><td>${fmt(r.schedule._t.pay)}</td><td>—</td></tr>`;
 
   } else {
-
+    // Лизинг
     cardsHTML=`
       <div class="rc">
         <div class="cl">Долг лизинга</div>
         <div class="cv">${fmt(r.debt)}</div>
       </div>
-
+      <div class="fee-row">
+  <div class="cl">Комиссия за оформление (клиент)</div>
+  <div class="cv">3.50%</div>
+  <div class="cs">${fmt(r.commAmt)}</div>
+</div>
       <div class="rc">
         <div class="cl">Аванс</div>
         <div class="cv">${fmt(r.advance)}</div>
         <div class="cs">${(r.advPct*100).toFixed(0)}%</div>
       </div>
-
       <div class="rc">
         <div class="cl">Общая сумма оплаты</div>
         <div class="cv">${fmt(r.totalPay)}</div>
       </div>
-
       <div class="rc">
         <div class="cl">Ставка лизинга</div>
         <div class="cv">${fmtPct(r.flatRate)}</div>
-      </div>
+      </div>`;
 
-      <!-- 🔥 ФИКС 3.5% -->
-      <div class="fee-row">
-        <div class="cl">Комиссия за оформление (клиент)</div>
-        <div class="cv">3.50%</div>
-        <div class="cs">${fmt(r.commAmt)}</div>
-      </div>
-    `;
-
-    document.getElementById('schedHead').innerHTML=`
-      <tr>
-        <th>№</th>
-        <th>Платёж</th>
-        <th>Осн. долг</th>
-        <th>Проценты</th>
-        <th>Остаток</th>
-      </tr>`;
-
-    let tbody=document.getElementById('schedBody');
+    // Schedule: лизинг — 5 колонок
+    document.getElementById('schedHead').innerHTML=`<tr>
+      <th>№</th><th>Платёж</th><th>Осн. долг</th><th>Проценты</th><th>Остаток долга</th></tr>`;
+    const tbody=document.getElementById('schedBody');
     tbody.innerHTML='';
-
     r.schedule.forEach(row=>{
-      let tr=document.createElement('tr');
-      tr.innerHTML=`
-        <td>${row.n}</td>
-        <td>${fmt(row.pay)}</td>
-        <td>${fmt(row.princ)}</td>
-        <td>${fmt(row.intr)}</td>
-        <td>${fmt(row.bal)}</td>
-      `;
+      const tr=document.createElement('tr');
+      tr.innerHTML=`<td>${row.n}</td><td>${fmt(row.pay)}</td><td>${fmt(row.princ)}</td><td>${fmt(row.intr)}</td><td>${fmt(row.bal)}</td>`;
       tbody.appendChild(tr);
     });
-
-    let tot=r.tot;
-
-    document.getElementById('schedFoot').innerHTML=`
-      <tr>
-        <td>Итого</td>
-        <td>${fmt(tot.pay)}</td>
-        <td>${fmt(tot.princ)}</td>
-        <td>${fmt(tot.intr)}</td>
-        <td>—</td>
-      </tr>`;
+    const tot=r.tot;
+    document.getElementById('schedFoot').innerHTML=
+      `<tr><td>Итого</td><td>${fmt(tot.pay)}</td><td>${fmt(tot.princ)}</td><td>${fmt(tot.intr)}</td><td>—</td></tr>`;
   }
 
   document.getElementById('resultCards').innerHTML=`
@@ -744,101 +648,90 @@ function renderResults(r){
       <div class="rg">${cardsHTML}</div>
     </div>`;
 
+  document.getElementById('commBlock').style.display='none';
   document.getElementById('schedSec').style.display='block';
   document.getElementById('actBtns').classList.add('vis');
+  document.getElementById('screenSubtitle').textContent='График лизинговых платежей';
 }
-  /* === PRINT === */
-function buildPrintDoc(r){
 
-  let contractTotal;
-
-  if(r.mode==='leasing'){
-    contractTotal = r.advance + r.tot.pay + r.commAmt + r.insurance;
-  } else {
-    contractTotal = r.totalPay;
+/* ══ Commission (рассрочка — ввод вручную) ══ */
+function updateComm(){
+  if(!R||R.mode!=='rassrochka')return;
+  const val=parseVal(document.getElementById('commInput').value);
+  const commPct=val/100;
+  const commAmt=commPct>0?R.price*commPct:0;
+  R.commPct=commPct; R.commAmt=commAmt;
+  document.getElementById('commAmtDisplay').textContent=commPct>0?fmt(commAmt):'';
+  const feeDiv=document.getElementById('feeDisplay');
+  if(commPct>0){
+    feeDiv.style.display='block';
+    document.getElementById('feePctDisplay').textContent=fmtPct(commPct);
+    document.getElementById('feeAmtDisplay').textContent=fmt(commAmt);
+  }else{
+    feeDiv.style.display='none';
   }
+}
 
+/* ══ Print doc ══ */
+function buildPrintDoc(r){
+  const commAmt=r.commAmt||0;
+  const commPct=r.commPct||0;
+  const insurance=r.mode==='leasing'?(r.insurance||0):(r.price*INSURANCE_PCT);
+  const signing=r.advance+commAmt+insurance;
+  const contractTotal=signing+(r.tot?r.tot.pay:(r.schedule._t.pay));
+
+  // Top table
   document.getElementById('pdTop').innerHTML=`
-    <tr>
-      <td>Стоимость объекта</td>
-      <td>${fmt(r.price)}</td>
-    </tr>
-    <tr>
-      <td>Общая сумма договора</td>
-      <td>${fmt(contractTotal)}</td>
-    </tr>
-  `;
+    <tr><td class="pt-lbl">Стоимость объекта</td><td class="pt-val">${fmt(r.price)}</td></tr>
+    <tr><td class="pt-lbl">Общая стоимость договора</td><td class="pt-val">${fmt(contractTotal)}</td></tr>`;
+
+  // Conditions
+  const typeLabel=r.mode==='rassrochka'?'Рассрочка':'Лизинг / Аннуитет';
+  document.getElementById('pdCond').innerHTML=`
+    <tr class="pd-cond-head"><td colspan="3">Условия лизинга</td></tr>
+    <tr><td class="pc-lbl">Тип графика платежей</td><td class="pc-mid"></td><td class="pc-val">${typeLabel}</td></tr>
+    <tr class="pc-alt"><td class="pc-lbl">Срок</td><td class="pc-mid">Мес.</td><td class="pc-val">${r.term}</td></tr>
+    ${r.mode==='leasing'?`<tr><td class="pc-lbl">Ставка лизинга</td><td class="pc-mid"></td><td class="pc-val">${fmtPct(r.flatRate)}</td></tr>`:''}
+    <tr class="${r.mode==='leasing'?'pc-alt':''}"><td class="pc-lbl">Авансовый платёж</td><td class="pc-mid">${(r.advPct*100).toFixed(0)}%</td><td class="pc-val">${fmt(r.advance)}</td></tr>
+    <tr class="${r.mode==='leasing'?'':'pc-alt'}"><td class="pc-lbl">Комиссия за оформление</td><td class="pc-mid">${commPct>0?fmtPct(commPct):'0%'}</td><td class="pc-val">${commPct>0?fmt(commAmt):'-'}</td></tr>
+    <tr class="${r.mode==='leasing'?'pc-alt':''}"><td class="pc-lbl">Страхование на весь срок</td><td class="pc-mid">0,16%</td><td class="pc-val">${fmt(insurance)}</td></tr>`;
+
+  document.getElementById('pdSign').innerHTML=`
+    <tr><td class="ps-lbl">Общая сумма к оплате при подписании:</td><td class="ps-val">${fmt(signing)}</td></tr>`;
 
   document.getElementById('pdDebt').innerHTML=`
-    <tr>
-      <td>Долг</td>
-      <td>${fmt(r.debt)}</td>
-    </tr>
-  `;
+    <tr><td class="pdl">Долг лизинга</td><td class="pdv">${fmt(r.debt)}</td></tr>`;
 
+  // Schedule headers & rows
   if(r.mode==='rassrochka'){
-    document.getElementById('pdSchedHead').innerHTML=`
-      <tr>
-        <th>Месяц</th>
-        <th>Платёж</th>
-        <th>Остаток</th>
-      </tr>`;
+    document.getElementById('pdSchedHead').innerHTML=`<tr><th>Месяц</th><th>Оплаты</th><th>Уплате</th></tr>`;
+    const tot=r.schedule._t;
+    let rows=`<tr class="sched-sub"><td></td><td>${fmt(r.debt)}</td><td>${fmt(r.debt)}</td></tr>`;
+    rows+=r.schedule.map(row=>`<tr><td>${row.n}</td><td>${fmt(row.pay)}</td><td>${fmt(row.bal)}</td></tr>`).join('');
+    document.getElementById('pdSchedBody').innerHTML=rows;
+    document.getElementById('pdSchedFoot').innerHTML=`<tr><td>Итого</td><td>${fmt(tot.pay)}</td><td>—</td></tr>`;
   } else {
-    document.getElementById('pdSchedHead').innerHTML=`
-      <tr>
-        <th>№</th>
-        <th>Платёж</th>
-        <th>Осн. долг</th>
-        <th>Проценты</th>
-        <th>Остаток</th>
-      </tr>`;
+    document.getElementById('pdSchedHead').innerHTML=`<tr><th>№</th><th>Платёж</th><th>Осн. долг</th><th>Проценты</th><th>Остаток долга</th></tr>`;
+    const tot=r.tot;
+    let rows=`<tr class="sched-sub"><td></td><td>${fmt(r.debt)}</td><td>${fmt(r.debt)}</td><td>${fmt(tot.intr)}</td><td>${fmt(r.debt)}</td></tr>`;
+    rows+=r.schedule.map(row=>`<tr><td>${row.n}</td><td>${fmt(row.pay)}</td><td>${fmt(row.princ)}</td><td>${fmt(row.intr)}</td><td>${fmt(row.bal)}</td></tr>`).join('');
+    document.getElementById('pdSchedBody').innerHTML=rows;
+    document.getElementById('pdSchedFoot').innerHTML=`<tr><td>Итого</td><td>${fmt(tot.pay)}</td><td>${fmt(tot.princ)}</td><td>${fmt(tot.intr)}</td><td>—</td></tr>`;
   }
-
-  let rows='';
-
-  if(r.mode==='rassrochka'){
-    rows = r.schedule.map(row=>`
-      <tr>
-        <td>${row.n}</td>
-        <td>${fmt(row.pay)}</td>
-        <td>${fmt(row.bal)}</td>
-      </tr>
-    `).join('');
-  } else {
-    rows = r.schedule.map(row=>`
-      <tr>
-        <td>${row.n}</td>
-        <td>${fmt(row.pay)}</td>
-        <td>${fmt(row.princ)}</td>
-        <td>${fmt(row.intr)}</td>
-        <td>${fmt(row.bal)}</td>
-      </tr>
-    `).join('');
-  }
-
-  document.getElementById('pdSchedBody').innerHTML=rows;
 }
 
-/* === CLIENT MODE === */
+/* ══ Client mode & Print ══ */
 function enterCM(){
-  if(!R){
-    alert('Сначала рассчитайте');
-    return;
-  }
+  if(!R){alert('Сначала нажмите «Рассчитать»');return}
   document.body.classList.add('cm');
 }
+function exitCM(){document.body.classList.remove('cm')}
 
-function exitCM(){
-  document.body.classList.remove('cm');
-}
-
-/* === PRINT ACTION === */
 function doPrint(){
   if(!R)return;
   buildPrintDoc(R);
   setTimeout(()=>window.print(),100);
 }
-
 </script>
 </body>
 </html>
