@@ -381,7 +381,11 @@ function switchType(m){
     <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
       <rect x="2" y="3" width="20" height="18" rx="3"/><path d="M7 8h10M7 12h6M7 16h4"/></svg>
     <p>Введите параметры и нажмите «Рассчитать»</p></div>`;
-  document.getElementById('commBlock').style.display='none';
+  if(r.mode==='leasing'){
+  document.getElementById('commBlock').style.display='block';
+}else{
+  document.getElementById('commBlock').style.display='block';
+}
   document.getElementById('schedSec').style.display='none';
   document.getElementById('actBtns').classList.remove('vis');
   document.getElementById('commInput').value='';
