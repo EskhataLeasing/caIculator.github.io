@@ -588,6 +588,7 @@ function renderResults(r){
   <div class="cv">${fmtPct(r.foundDisc)}</div>
   <div class="cs">${fmt(r.discAmt)}</div>
 </div>
+';
 
     // Schedule: рассрочка — 3 колонки (№, платёж, остаток)
     document.getElementById('schedHead').innerHTML=`<tr>
@@ -653,7 +654,7 @@ function renderResults(r){
   document.getElementById('actBtns').classList.add('vis');
   document.getElementById('screenSubtitle').textContent='График лизинговых платежей';
 }
-
+setLang(lang);
 /* ══ Commission (рассрочка — ввод вручную) ══ */
 function updateComm(){
   if(!R||R.mode!=='rassrochka')return;
@@ -730,7 +731,13 @@ function exitCM(){document.body.classList.remove('cm')}
 function doPrint(){
   if(!R)return;
   buildPrintDoc(R);
-  setTimeout(()=>window.print(),100);
+
+  document.getElementById('printDoc').style.display='block';
+
+  setTimeout(()=>{
+    window.print();
+    document.getElementById('printDoc').style.display='none';
+  },100);
 }
 </script>
 </body>
