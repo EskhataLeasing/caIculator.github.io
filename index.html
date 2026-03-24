@@ -2,153 +2,102 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Eskhata Leasing — Калькулятор</title>
-
+<link rel="icon" type="image/png" href="favicon.png">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
 <style>
-body{font-family:'Manrope',sans-serif;background:#eef1f7;margin:0}
-main{max-width:1100px;margin:40px auto;display:grid;grid-template-columns:350px 1fr;gap:20px}
-.card{background:#fff;padding:20px;border-radius:14px}
+:root{
+  --blue:#1a4fa0;--blue-l:#2563c7;--accent:#6c63ff;
+  --bg:#eef1f7;--card:#fff;--text:#0f1923;--muted:#6b7a8d;
+  --border:#dde3ed;--shadow:0 2px 16px rgba(26,79,160,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 
-input{width:100%;padding:10px;margin-bottom:10px;border-radius:8px;border:1px solid #ccc}
+header{
+  background:var(--card);border-bottom:1px solid var(--border);
+  padding:0 40px;height:60px;display:flex;align-items:center;
+  justify-content:space-between;position:sticky;top:0;z-index:100;
+  box-shadow:0 1px 8px rgba(26,79,160,.06);
+}
+.logo{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:800;color:var(--text);text-decoration:none}
+.logo-img{height:36px;width:auto;object-fit:contain;flex-shrink:0}
+.logo-icon{width:36px;height:36px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:800;flex-shrink:0}
+.lang-sw{display:flex;gap:14px}
+.lang-sw a{font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;cursor:pointer;transition:color .2s}
+.lang-sw a:hover,.lang-sw a.active{color:var(--blue)}
 
-button{width:100%;padding:12px;border:none;border-radius:10px;font-weight:700;cursor:pointer}
-.btn-p{background:#4f46e5;color:#fff}
+main{max-width:1120px;margin:0 auto;padding:36px 24px 60px}
+.grid{display:grid;grid-template-columns:380px 1fr;gap:24px;align-items:start}
+.card{background:var(--card);border-radius:16px;padding:28px;box-shadow:var(--shadow)}
+  /* ── TYPE SWITCHER ── */
+.type-sw{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}
+.type-btn{
+  padding:11px 8px;border:2px solid var(--border);border-radius:10px;
+  background:#f8fafd;font-family:'Manrope',sans-serif;font-size:13px;
+  font-weight:700;color:var(--muted);cursor:pointer;transition:all .2s;text-align:center;
+}
+.type-btn.active{
+  border-color:var(--blue);background:#eef4ff;color:var(--blue);
+}
+
+/* ── FORM ── */
+.fg{margin-bottom:16px}
+label{display:block;font-size:11px;font-weight:700;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
+input[type=text],input[type=number]{
+  width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;
+  font-size:15px;font-family:'Manrope',sans-serif;font-weight:500;color:var(--text);
+  background:#f8fafd;transition:border-color .2s,box-shadow .2s;outline:none;
+}
+input:focus{border-color:var(--blue-l);box-shadow:0 0 0 3px rgba(37,99,199,.1);background:#fff}
+
+.btn{width:100%;padding:12px;border:none;border-radius:10px;font-weight:700;cursor:pointer}
+.btn-p{background:linear-gradient(135deg,var(--blue),var(--accent));color:#fff}
 .btn-s{background:#111;color:#fff}
+  <script>
 
-.rc{background:#f4f7fb;padding:12px;border-radius:10px;margin-bottom:10px}
-.cl{font-size:12px;color:#777}
-.cv{font-size:18px;font-weight:800}
+/* === ИЗМЕНЕНИЯ === */
 
-.comm-row{background:#ecfdf5;padding:15px;border-radius:12px;margin-top:10px}
-.fee-row{background:#fdf4ff;padding:15px;border-radius:12px;margin-top:10px}
-
-table{width:100%;margin-top:10px;border-collapse:collapse}
-td,th{padding:6px;border-bottom:1px solid #eee;text-align:right}
-th:first-child,td:first-child{text-align:left}
-</style>
-</head>
-
-<body>
-
-<main>
-
-<!-- LEFT -->
-<div class="card">
-  <input id="price" placeholder="Стоимость">
-  <input id="advPct" placeholder="Аванс %">
-  <input id="term" placeholder="Срок (мес)">
-
-  <button class="btn-p" onclick="calculate()">Рассчитать</button>
-</div>
-
-<!-- RIGHT -->
-<div>
-  <div id="results"></div>
-  <table id="table"></table>
-</div>
-
-</main>
-
-<script>
-
-/* === CONFIG === */
-const TARGET_IRR=0.3;
-const DISC_STEP=0.0005;
-const DISC_MAX=0.5;
-const REG_FEE=1000000;
-const LEASING_COMM=0.035;
-
-/* === UTILS === */
-function parse(v){return parseFloat(v)||0}
-function fmt(n){return Math.round(n).toLocaleString('ru-RU')}
-function pct(n){return (n*100).toFixed(2)+'%'}
-
-/* === IRR === */
-function irr(cfs){
-  let lo=-0.9999,hi=100;
-  for(let i=0;i<300;i++){
-    let mid=(lo+hi)/2;
-    let npv=0;
-    for(let j=0;j<cfs.length;j++){
-      npv+=cfs[j]/Math.pow(1+mid,j);
-    }
-    if(Math.abs(npv)<0.01)return mid*12;
-    if(npv>0)lo=mid; else hi=mid;
-  }
-  return 0;
-}
-
-/* === FIND DISCOUNT === */
-function findDisc(price,adv,debt,term){
-  let d=DISC_STEP;
-  while(d<=DISC_MAX){
-    let da=price*d;
-    let vat=da*12/112;
-    let cf0=adv-(price-da+vat+REG_FEE);
-    let cfs=[cf0];
-    for(let i=1;i<=term;i++)cfs.push(debt/term);
-    let r=irr(cfs);
-    if(r>=TARGET_IRR)return d;
-    d+=DISC_STEP;
-  }
-  return 0;
-}
-
-/* === CALC === */
-function calculate(){
-  const price=parse(document.getElementById('price').value);
-  const advPct=parse(document.getElementById('advPct').value)/100;
-  const term=parse(document.getElementById('term').value);
-
+/* ЛИЗИНГ — убрали input */
+function calcLeasing(price,advPct,term){
   const advance=price*advPct;
   const debt=price-advance;
+  const commAmt=price*0.035;
 
-  const disc=findDisc(price,advance,debt,term);
-  const discAmt=price*disc;
+  document.getElementById('commBlock').style.display='none';
 
-  /* === RENDER === */
+  R={mode:'leasing',price,advance,debt,commAmt};
+  renderResults(R);
+}
 
-  document.getElementById('results').innerHTML=`
+/* РЕНДЕР */
+function renderResults(r){
+  let cardsHTML='';
 
-    <div class="rc">
-      <div class="cl">Долг</div>
-      <div class="cv">${fmt(debt)}</div>
-    </div>
+  if(r.mode==='rassrochka'){
 
-    <div class="rc">
-      <div class="cl">Аванс</div>
-      <div class="cv">${fmt(advance)}</div>
-    </div>
+    cardsHTML=`
+      <div class="comm-row">
+        <div class="cl">Единоразовый % для клиента</div>
+        <div class="cv">${(r.foundDisc*100).toFixed(2)}%</div>
+      </div>
+    `;
 
-    <div class="comm-row">
-      <div class="cl">Единоразовый % для клиента</div>
-      <div class="cv">${pct(disc)}</div>
-      <div>${fmt(discAmt)}</div>
-    </div>
+    document.getElementById('commBlock').style.display='none';
 
-  `;
+  } else {
 
-  /* === TABLE === */
-  let html="<tr><th>Мес</th><th>Платёж</th><th>Остаток</th></tr>";
-  let bal=debt;
-
-  for(let i=1;i<=term;i++){
-    let pay=debt/term;
-    bal-=pay;
-    html+=`<tr>
-      <td>${i}</td>
-      <td>${fmt(pay)}</td>
-      <td>${fmt(Math.max(bal,0))}</td>
-    </tr>`;
+    cardsHTML=`
+      <div class="fee-row">
+        <div class="cl">Комиссия за оформление (клиент)</div>
+        <div class="cv">3.50%</div>
+      </div>
+    `;
   }
 
-  document.getElementById('table').innerHTML=html;
+  document.getElementById('resultCards').innerHTML=cardsHTML;
 }
 
 </script>
-
-</body>
-</html>
